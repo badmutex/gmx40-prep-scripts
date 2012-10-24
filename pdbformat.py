@@ -1,12 +1,4 @@
 
-def getopts():
-    p = argparse.ArgumentParser()
-    p.add_argument('-f', '--inpdb')
-    p.add_argument('-o', '--outpdb')
-
-    return p.parse_args()
-
-
 def getAtomStr(data, lineNo):
     """
     data :: [str]

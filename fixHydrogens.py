@@ -29,6 +29,7 @@ def fix_pdb(inpath, outpath):
         if \
                 atomStr1[0] == 'H' and atomStr1[-1] == '2' \
                 and not atomStr0[0] == 'H' and atomStr2[0] == 'H' and atomStr2[-1] == '3':
+
             newStr1 = atomStr1[:-1] + '1'
             newStr2 = atomStr2[:-1] + '2'
             pdbformat.setAtomStr(data, i, newStr1)
