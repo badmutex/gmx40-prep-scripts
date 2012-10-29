@@ -14,6 +14,16 @@ SIM_MDP=gpu.mdp
 
 pdb=$1
 name=$(basename $pdb .pdb)
+fixed=$name-fixed
+
+
+################################################################################
+### fix residues for gmx 4.0
+################################################################################
+
+fix-for-gmx40() {
+$(dirname $0)/fix-for-gmx4.0.sh $pdb $fixed.pdb
+}
 
 
 ################################################################################
@@ -22,7 +32,7 @@ name=$(basename $pdb .pdb)
 
 prepare-topology() {
 
-pdb2gmx -f $pdb -o $name.gro -p $name.top -ff amber03
+pdb2gmx -f $fixed.pdb -o $name.gro -p $name.top -ff amber03
 sed -i 's/\(#include "spc.itp"\)/;\1/' $name.top
 
 }
@@ -306,6 +316,7 @@ grompp -v -f $SIM_MDP -c $name-equil-constr.gro -p $name.top -o $name-gpu.tpr
 }
 
 
+fix-for-gmx40
 
 prepare-topology
 em-vaccum
@@ -317,3 +328,4 @@ equil
 equil-constr
 
 prep-for-gpu
+rm -f \#*
